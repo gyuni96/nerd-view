@@ -1,23 +1,23 @@
-"use client"
+'use client';
 
-import { useSearchParams } from "next/navigation"
-import Link from "next/link"
-import { useSearchQuery } from "@/queries/search/search"
-import { Card, CardContent } from "@/components/ui/card"
-import { MapPin } from "lucide-react"
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { MapPin } from 'lucide-react';
+import { useSearch } from '@/hooks/queries';
 
 const SearchPage = () => {
-  const searchParams = useSearchParams()
-  const query = searchParams.get("q") || ""
+  const searchParams = useSearchParams();
+  const query = searchParams.get('q') || '';
 
-  const { data, isLoading, error } = useSearchQuery(query)
+  const { data, isLoading, error } = useSearch(query);
 
   if (!query) {
     return (
       <div className="container mx-auto px-4 py-8">
         <p className="text-center text-muted-foreground">검색어를 입력해주세요.</p>
       </div>
-    )
+    );
   }
 
   if (isLoading) {
@@ -25,7 +25,7 @@ const SearchPage = () => {
       <div className="container mx-auto px-4 py-8">
         <p className="text-center">검색 중...</p>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -33,7 +33,7 @@ const SearchPage = () => {
       <div className="container mx-auto px-4 py-8">
         <p className="text-center text-destructive">검색에 실패했습니다. {error.message}</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -51,9 +51,7 @@ const SearchPage = () => {
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {data?.map((venue) => (
             <Link key={venue.id} href={`/venues/${venue.id}`}>
-              <Card
-                className="cursor-pointer hover:shadow-lg transition-shadow overflow-hidden"
-              >
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow overflow-hidden">
                 <div className="aspect-video relative overflow-hidden">
                   <img
                     src={venue.image_url}
@@ -67,9 +65,7 @@ const SearchPage = () => {
                     <MapPin size={14} className="sm:w-4 sm:h-4 mt-0.5 flex-shrink-0" />
                     <span className="line-clamp-2">{venue.address}</span>
                   </div>
-                  <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
-                    {venue.description}
-                  </p>
+                  <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{venue.description}</p>
                 </CardContent>
               </Card>
             </Link>
@@ -77,7 +73,7 @@ const SearchPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SearchPage
+export default SearchPage;

@@ -7,7 +7,7 @@ export type SearchFormData = {
   search: string;
 };
 
-export const useSearch = () => {
+export const useSearchForm = () => {
   const { register, handleSubmit, watch, formState } = useForm<SearchFormData>();
   const router = useRouter();
 

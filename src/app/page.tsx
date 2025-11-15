@@ -15,6 +15,7 @@ export default function Home() {
             </p>
           </div>
           <SearchForm />
+
           {/* TODO 인기 검색어는 나중에 넣기 */}
           {/* 인기 검색어 */}
           {/* <div className="text-xs sm:text-sm px-4">

@@ -5,7 +5,7 @@ import { sampleVenueData } from "@/data/sample-venue"
 
 export default function VenueDetailPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
       <div className="mb-8">
         <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
           <h3 className="font-semibold text-yellow-800 mb-2">사용 방법</h3>

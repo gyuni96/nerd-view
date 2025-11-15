@@ -93,7 +93,7 @@ export default function SectionDetailPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">{section.name} 상세 좌석</h2>
@@ -230,9 +230,7 @@ export default function SectionDetailPage() {
               <div className="text-xs text-gray-300 mt-1.5">
                 {section.name} • {section.seatLayout[0]?.type}
               </div>
-              <div className="text-xs text-blue-300 mt-1.5 font-medium">
-                클릭하여 좌석 뷰 확인
-              </div>
+              <div className="text-xs text-blue-300 mt-1.5 font-medium">클릭하여 좌석 뷰 확인</div>
             </div>
           )}
         </div>

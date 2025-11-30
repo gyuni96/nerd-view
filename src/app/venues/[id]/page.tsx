@@ -1,9 +1,16 @@
-"use client"
-
 import { VenueViewer } from "@/components/venue"
-import { sampleVenueData } from "@/data/sample-venue"
 
-export default function VenueDetailPage() {
+interface VenueDetailPageProps {
+  params: {
+    id: string
+  }
+}
+
+const VenueDetailPage = async ({ params }: VenueDetailPageProps) => {
+  // console.log(searchParams)
+
+  const { id } = await params
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
       <div className="mb-8">
@@ -18,8 +25,10 @@ export default function VenueDetailPage() {
       {/* 공연장 뷰어 */}
       <div className="bg-white rounded-lg shadow-lg p-6">
         <h2 className="text-2xl font-semibold mb-4">공연장 좌석 배치도</h2>
-        <VenueViewer venueData={sampleVenueData} />
+        <VenueViewer venueId={id} />
       </div>
     </div>
   )
 }
+
+export default VenueDetailPage

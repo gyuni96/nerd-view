@@ -19,8 +19,8 @@ export interface SeatLayout {
 }
 
 export interface Stage {
-  x: number
-  y: number
+  x?: number
+  y?: number
   d: string // SVG path data
 }
 
@@ -28,7 +28,9 @@ export interface Section {
   id: string
   name: string
   d: string // SVG path data
-  seatLayout: SeatLayout[]
+  seatLayout?: SeatLayout[]
+  color?: string
+  sectionName?: string
 }
 
 export interface VenueData {

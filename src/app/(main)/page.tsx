@@ -1,9 +1,10 @@
 import { Footer } from "@/components/common"
-import SearchForm from "./_components/searchForm"
+import SearchForm from "./_components/SearchForm"
 import { Metadata } from "next"
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query"
 import { getPopularKeywords } from "../actions/venueAction"
-import PopularVenues from "./_components/popularVenues"
+import PopularVenues from "./_components/PopularVenues"
+import Image from "next/image"
 
 export const metadata: Metadata = {
   title: "덕후보자 - 콘서트 좌석 시야 확인",
@@ -33,6 +34,17 @@ export const Home = async () => {
           <div className="max-w-3xl w-full text-center">
             {/* 로고 및 타이틀 */}
             <div className="mb-8 sm:mb-12">
+              <div className="flex justify-center mb-4">
+                <Image
+                  src="/logo.jpg"
+                  alt="덕후보자 로고"
+                  width={100}
+                  height={100}
+                  className="rounded-lg w-48 h-auto"
+                />
+              </div>
+              <br />
+
               <h1 className="mb-3 sm:mb-4 text-3xl sm:text-5xl">🎤 덕후보자</h1>
               <p className="text-muted-foreground text-base sm:text-lg px-4">
                 콘서트 좌석, 미리 보고 선택하세요

@@ -6,6 +6,95 @@ import { Section, SeatInfo, RowDefinition } from "@/types/seat-layout"
 import { sampleVenueData } from "@/data/sample-venue"
 import SeatViewModal from "@/components/venue/SeatViewModal"
 
+const dumpData = {
+  type: "일반좌석",
+  aisleWidth: 25,
+  name: "Floor 1",
+  sectionId: "",
+  rowDefinitions: [
+    {
+      rowLabel: "A",
+      startSeatNum: 1,
+      seatCount: 20,
+      startPosition: { x: 70, y: 340 },
+      seatSpacing: 18,
+      aisleAfter: [10], // 10번 좌석 뒤에 통로
+    },
+    {
+      rowLabel: "B",
+      startSeatNum: 1,
+      seatCount: 20,
+      startPosition: { x: 70, y: 355 },
+      seatSpacing: 18,
+      aisleAfter: [10],
+    },
+    {
+      rowLabel: "C",
+      startSeatNum: 1,
+      seatCount: 20,
+      startPosition: { x: 70, y: 370 },
+      seatSpacing: 18,
+      aisleAfter: [10],
+    },
+    {
+      rowLabel: "D",
+      startSeatNum: 1,
+      seatCount: 20,
+      startPosition: { x: 70, y: 385 },
+      seatSpacing: 18,
+      aisleAfter: [10],
+    },
+    {
+      rowLabel: "E",
+      startSeatNum: 1,
+      seatCount: 20,
+      startPosition: { x: 70, y: 400 },
+      seatSpacing: 18,
+      aisleAfter: [10],
+    },
+    {
+      rowLabel: "F",
+      startSeatNum: 1,
+      seatCount: 20,
+      startPosition: { x: 70, y: 415 },
+      seatSpacing: 18,
+      aisleAfter: [10],
+    },
+    {
+      rowLabel: "G",
+      startSeatNum: 1,
+      seatCount: 20,
+      startPosition: { x: 70, y: 430 },
+      seatSpacing: 18,
+      aisleAfter: [10],
+    },
+    {
+      rowLabel: "H",
+      startSeatNum: 1,
+      seatCount: 20,
+      startPosition: { x: 70, y: 445 },
+      seatSpacing: 18,
+      aisleAfter: [10],
+    },
+    {
+      rowLabel: "I",
+      startSeatNum: 1,
+      seatCount: 20,
+      startPosition: { x: 70, y: 460 },
+      seatSpacing: 18,
+      aisleAfter: [10],
+    },
+    {
+      rowLabel: "J",
+      startSeatNum: 1,
+      seatCount: 20,
+      startPosition: { x: 70, y: 475 },
+      seatSpacing: 18,
+      aisleAfter: [10],
+    },
+  ],
+}
+
 export default function SectionDetailPage() {
   const params = useParams()
   const router = useRouter()
@@ -14,54 +103,52 @@ export default function SectionDetailPage() {
   const [hoveredSeat, setHoveredSeat] = useState<SeatInfo | null>(null)
   const [selectedSeatForView, setSelectedSeatForView] = useState<SeatInfo | null>(null)
 
-  // 섹션 찾기
-  const section = sampleVenueData.section.find((s) => s.id === sectionId)
+  // // 섹션 찾기
+  // const section = sampleVenueData.section.find((s) => s.id === sectionId)
 
-  if (!section) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-red-600">섹션을 찾을 수 없습니다</h2>
-          <button
-            onClick={() => router.back()}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
-            돌아가기
-          </button>
-        </div>
-      </div>
-    )
-  }
+  // if (!section) {
+  //   return (
+  //     <div className="container mx-auto px-4 py-8">
+  //       <div className="text-center">
+  //         <h2 className="text-2xl font-bold text-red-600">섹션을 찾을 수 없습니다</h2>
+  //         <button
+  //           onClick={() => router.back()}
+  //           className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+  //         >
+  //           돌아가기
+  //         </button>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   // 좌석 정보 생성
   const generateSeats = (): SeatInfo[] => {
     const seats: SeatInfo[] = []
 
-    section.seatLayout.forEach((layout) => {
-      layout.rowDefinitions.forEach((row: RowDefinition) => {
-        let currentX = row.startPosition.x
+    dumpData.rowDefinitions.forEach((row: RowDefinition) => {
+      let currentX = row.startPosition.x
 
-        for (let i = 0; i < row.seatCount; i++) {
-          const seatNumber = row.startSeatNum + i
-          const seatPosition = {
-            x: currentX,
-            y: row.startPosition.y,
-          }
-
-          seats.push({
-            sectionId: section.id,
-            rowLabel: row.rowLabel,
-            seatNumber,
-            position: seatPosition,
-          })
-
-          // 다음 좌석 위치 계산 (통로가 있으면 추가 간격)
-          currentX += row.seatSpacing
-          if (row.aisleAfter.includes(seatNumber)) {
-            currentX += layout.aisleWidth // 통로 간격 추가
-          }
+      for (let i = 0; i < row.seatCount; i++) {
+        const seatNumber = row.startSeatNum + i
+        const seatPosition = {
+          x: currentX,
+          y: row.startPosition.y,
         }
-      })
+
+        seats.push({
+          sectionId: dumpData.sectionId,
+          rowLabel: row.rowLabel,
+          seatNumber,
+          position: seatPosition,
+        })
+
+        // 다음 좌석 위치 계산 (통로가 있으면 추가 간격)
+        currentX += row.seatSpacing
+        if (row.aisleAfter.includes(seatNumber)) {
+          currentX += dumpData.aisleWidth // 통로 간격 추가
+        }
+      }
     })
 
     return seats
@@ -96,7 +183,7 @@ export default function SectionDetailPage() {
     <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">{section.name} 상세 좌석</h2>
+          <h2 className="text-2xl font-bold">{dumpData.name} 상세 좌석</h2>
           <button
             onClick={() => router.back()}
             className="text-gray-500 hover:text-gray-700 text-2xl font-bold px-4 py-2 rounded hover:bg-gray-100"
@@ -145,18 +232,18 @@ export default function SectionDetailPage() {
                 if (isHovered) return "#3b82f6" // 호버된 좌석 - 밝은 파란색
 
                 // 섹션별 색상 구분
-                if (section.name.includes("VIP")) return "#7c3aed" // VIP - 보라색
-                if (section.name.includes("발코니")) return "#dc2626" // 발코니 - 빨간색
-                if (section.name.includes("스탠딩")) return "#ea580c" // 스탠딩 - 주황색
+                if (dumpData.name.includes("VIP")) return "#7c3aed" // VIP - 보라색
+                if (dumpData.name.includes("발코니")) return "#dc2626" // 발코니 - 빨간색
+                if (dumpData.name.includes("스탠딩")) return "#ea580c" // 스탠딩 - 주황색
                 return "#059669" // 일반석 - 초록색
               }
 
               const getSeatStroke = () => {
                 if (isHovered) return "#2563eb"
 
-                if (section.name.includes("VIP")) return "#6b21a8"
-                if (section.name.includes("발코니")) return "#b91c1c"
-                if (section.name.includes("스탠딩")) return "#c2410c"
+                if (dumpData.name.includes("VIP")) return "#6b21a8"
+                if (dumpData.name.includes("발코니")) return "#b91c1c"
+                if (dumpData.name.includes("스탠딩")) return "#c2410c"
                 return "#047857"
               }
 
@@ -201,21 +288,19 @@ export default function SectionDetailPage() {
             })}
 
             {/* 행 라벨 */}
-            {section.seatLayout.map((layout) =>
-              layout.rowDefinitions.map((row) => (
-                <text
-                  key={row.rowLabel}
-                  x={row.startPosition.x - 25}
-                  y={row.startPosition.y + 1}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  className="fill-gray-600 font-medium pointer-events-none select-none"
-                  style={{ fontSize: "8px" }}
-                >
-                  {row.rowLabel}
-                </text>
-              ))
-            )}
+            {dumpData.rowDefinitions.map((row) => (
+              <text
+                key={row.rowLabel}
+                x={row.startPosition.x - 25}
+                y={row.startPosition.y + 1}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="fill-gray-600 font-medium pointer-events-none select-none"
+                style={{ fontSize: "8px" }}
+              >
+                {row.rowLabel}
+              </text>
+            ))}
           </svg>
 
           {/* 호버된 좌석 정보 */}
@@ -228,7 +313,7 @@ export default function SectionDetailPage() {
                 {hoveredSeat.rowLabel}행 {hoveredSeat.seatNumber}번
               </div>
               <div className="text-xs text-gray-300 mt-1.5">
-                {section.name} • {section.seatLayout[0]?.type}
+                {dumpData.name} • {dumpData?.type}
               </div>
               <div className="text-xs text-blue-300 mt-1.5 font-medium">클릭하여 좌석 뷰 확인</div>
             </div>
@@ -240,7 +325,7 @@ export default function SectionDetailPage() {
       {selectedSeatForView && (
         <SeatViewModal
           seat={selectedSeatForView}
-          sectionName={section.name}
+          sectionName={dumpData.name}
           onClose={handleCloseModal}
         />
       )}

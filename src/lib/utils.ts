@@ -1,4 +1,5 @@
 import { TransformedVenueData } from "@/app/venues/_hooks/useVenues"
+import { SeatInfo } from "@/types/seat-layout"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -191,4 +192,22 @@ export const calculateTextPosition = (pathData?: string) => {
     width: maxX - minX,
     height: maxY - minY,
   }
+}
+
+/**
+ * 공연장 전체 뷰박스 계산
+ * @returns
+ */
+export const calculateSeatViewBox = (seats: SeatInfo[]) => {
+  if (seats.length === 0) return "0 0 1000 1000"
+
+  const xCoords = seats.map((s) => s.position.x)
+  const yCoords = seats.map((s) => s.position.y)
+
+  const minX = Math.min(...xCoords) - 50
+  const maxX = Math.max(...xCoords) + 50
+  const minY = Math.min(...yCoords) - 50
+  const maxY = Math.max(...yCoords) + 50
+
+  return `${minX} ${minY} ${maxX - minX} ${maxY - minY}`
 }

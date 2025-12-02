@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import SearchResultList from "./_components/searchResultList"
+import SearchResultList from "./_components/SearchResultList"
 
 export const metadata: Metadata = {
   title: "검색 결과 - 덕후보자",

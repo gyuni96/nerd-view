@@ -1,4 +1,4 @@
-import { VenueViewer } from "@/components/venue"
+import VenueViewer from "../_components/VenueViewer"
 
 interface VenueDetailPageProps {
   params: {
@@ -7,8 +7,6 @@ interface VenueDetailPageProps {
 }
 
 const VenueDetailPage = async ({ params }: VenueDetailPageProps) => {
-  // console.log(searchParams)
-
   const { id } = await params
 
   return (

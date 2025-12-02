@@ -44,13 +44,19 @@ export const getPopularKeywords = async (): Promise<Venues[]> => {
   }
 }
 
-export const getVenueById = async (venueId: string): Promise<Venues | null> => {
+export const getVenueInfo = async (venueId: string): Promise<any> => {
   try {
     const supabase = await createClient()
 
     const { data, error } = await supabase
       .from("venues")
-      .select("name , address")
+      .select(
+        `
+        name , 
+        address , 
+        sections!inner( name , id , color , section_group , d:svg_path , type )
+        `
+      )
       .eq("id", venueId)
       .single()
 
@@ -58,38 +64,9 @@ export const getVenueById = async (venueId: string): Promise<Venues | null> => {
       throw error
     }
 
-    return data as Venues
+    return data
   } catch (err) {
     console.error(err)
-    return null
-  }
-}
-
-export const getVenueSection = async (venueId: string): Promise<VenueSections[]> => {
-  try {
-    const supabase = await createClient()
-
-    const { data, error } = await supabase
-      .from("sections")
-      .select(
-        `
-        name , 
-        id , 
-        color , 
-        section_group , 
-        d:svg_path , 
-        type`
-      )
-      .eq("venue_id", venueId)
-
-    if (error) {
-      console.error("Supabase 에러:", error)
-      throw error
-    }
-
-    return data as VenueSections[]
-  } catch (err) {
-    console.error(err)
-    return []
+    return { name: "", address: "", sections: [] }
   }
 }

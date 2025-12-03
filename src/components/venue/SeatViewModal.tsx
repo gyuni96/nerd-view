@@ -2,6 +2,7 @@
 
 import { SeatInfo } from "@/types/seat-layout"
 import Image from "next/image"
+import { useEffect } from "react"
 
 interface SeatViewModalProps {
   seat: SeatInfo
@@ -10,6 +11,14 @@ interface SeatViewModalProps {
 }
 
 export default function SeatViewModal({ seat, sectionName, onClose }: SeatViewModalProps) {
+  // 모달 열릴 때 body 스크롤 막기
+  useEffect(() => {
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [])
+
   // 좌석 등급에 따른 뷰 설명
   const getViewDescription = () => {
     if (sectionName.includes("VIP")) {
@@ -48,15 +57,15 @@ export default function SeatViewModal({ seat, sectionName, onClose }: SeatViewMo
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-auto"
+        className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* 헤더 */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center rounded-t-2xl z-10">
+        <div className="sticky top-0 bg-white/90 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex justify-between items-center rounded-t-2xl z-10">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">좌석 뷰 미리보기</h2>
             <p className="text-sm text-gray-500 mt-1">
@@ -67,12 +76,7 @@ export default function SeatViewModal({ seat, sectionName, onClose }: SeatViewMo
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-full"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -87,11 +91,16 @@ export default function SeatViewModal({ seat, sectionName, onClose }: SeatViewMo
         <div className="p-6">
           {/* 좌석 등급 배지 */}
           <div className="mb-4">
-            <span className={`inline-block px-4 py-2 rounded-full text-sm font-semibold border ${getGradeColor()}`}>
+            <span
+              className={`inline-block px-4 py-2 rounded-full text-sm font-semibold border ${getGradeColor()}`}
+            >
               {sectionName.includes("VIP") && "🌟 VIP석"}
               {sectionName.includes("발코니") && "🎭 발코니석"}
               {sectionName.includes("스탠딩") && "🎸 스탠딩"}
-              {!sectionName.includes("VIP") && !sectionName.includes("발코니") && !sectionName.includes("스탠딩") && "🎫 일반석"}
+              {!sectionName.includes("VIP") &&
+                !sectionName.includes("발코니") &&
+                !sectionName.includes("스탠딩") &&
+                "🎫 일반석"}
             </span>
           </div>
 
@@ -109,12 +118,7 @@ export default function SeatViewModal({ seat, sectionName, onClose }: SeatViewMo
           {/* 좌석 정보 */}
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 mb-6">
             <h3 className="font-semibold text-lg text-blue-900 mb-3 flex items-center gap-2">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -174,7 +178,7 @@ export default function SeatViewModal({ seat, sectionName, onClose }: SeatViewMo
         </div>
 
         {/* 푸터 */}
-        <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 px-6 py-4 flex justify-end gap-3 rounded-b-2xl">
+        <div className="sticky bottom-0 bg-gray-50/90 backdrop-blur-md border-t border-gray-200 px-6 py-4 flex justify-end gap-3 rounded-b-2xl">
           <button
             onClick={onClose}
             className="px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm"
